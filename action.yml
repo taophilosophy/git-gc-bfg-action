@@ -29,21 +29,20 @@ runs:
     - name: checkout mirror
       shell: bash
       run: |
-          echo "FILE_SIZE=${FILE_SIZE}" >> $GITHUB_ENV 
           echo "-----------------------------------------"
           printf '%s\n' "NOW_REPOSITORY is $GH_ACTION_REPOSITORY" 
-          printf '%s\n' "NOW_REPOSITORY_URL is $GH_ACTION_GH_ACTION_REPOSITORY_URL"
+          printf '%s\n' "NOW_REPOSITORY_URL is $(echo "$GH_ACTION_GH_ACTION_REPOSITORY_URL" | sed "s#git://#https://#")"
           printf '%s\n' "NOW_REPOSITORY_NAME is ${GITHUB_REPOSITORY##*/}" 
           printf '%s\n' "FILE_SIZE is ${FILE_SIZE}" 
           pwd
           echo "-----------------------------------------"
-          git clone --mirror $GH_ACTION_GH_ACTION_REPOSITORY_URL
+          git clone --mirror $(echo "$GH_ACTION_GH_ACTION_REPOSITORY_URL" | sed "s#git://#https://#")
           command -v wget >/dev/null 2>&1 || { sudo apt update -y && sudo apt install wget -y; }; wget https://github.com/rtyley/bfg-repo-cleaner/releases/download/v1.14.0/bfg-1.14.0.jar -O bfg-1.14.0.jar && [ -f "bfg-1.14.0.jar" ] && echo "Download successful: bfg-1.14.0.jar" || (echo "Download failed"; exit 1)
           ls -lk *.jar
           pwd
           java -jar bfg-1.14.0.jar --strip-blobs-bigger-than $FILE_SIZE $REPO_NAME.git
           pwd
-          cd ${GITHUB_REPOSITORY##*/}E.git
+          cd ${GITHUB_REPOSITORY##*/}.git
           pwd
           git reflog expire --expire=now --all && git gc --prune=now --aggressive
       env:
