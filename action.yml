@@ -64,7 +64,7 @@ runs:
           git reflog expire --expire=now --all && git gc --prune=now --aggressive
           echo "------GC---OK-------------------------"
           ls && pwd
-          git push -f
+          git push --force --all
           cd .. && du -sh ${GITHUB_REPOSITORY##*/}.git   
       env:
         GH_ACTION_REPOSITORY: ${{ github.repository }}       
