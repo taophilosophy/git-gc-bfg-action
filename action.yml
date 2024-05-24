@@ -55,8 +55,12 @@ runs:
           printf '%s\n' "Git username is ${NAME}"
           printf '%s\n' "Git Email is ${EMAIL}"
           cd ${GITHUB_REPOSITORY##*/}.git
+
           git config --global user.name "${NAME}"
           git config --global user.email "${EMAIL}"
+          git config --global remote.origin.fetch "+refs/heads/*:refs/heads/*"
+          git config --global remote.origin.fetch "+refs/tags/*:refs/tags/*"
+          git remote update
           git config --global url."https://${GITHUB_ACTOR}:${{ github.token }}@github.com".insteadOf "https://github.com"
           echo "--------GC---start-------------"
           pwd
@@ -64,7 +68,7 @@ runs:
           git reflog expire --expire=now --all && git gc --prune=now --aggressive
           echo "------GC---OK-------------------------"
           ls && pwd
-          git  push -f --set-upstream origin main
+          git push -f 
           cd .. && du -sh ${GITHUB_REPOSITORY##*/}.git   
       env:
         GH_ACTION_REPOSITORY: ${{ github.repository }}       
