@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-24.04
     name: TEST
     steps:
-    - uses: taophilosophy/git-gc-bfg-action@v1.0.33
+    - uses: taophilosophy/git-gc-bfg-action@v1.0.34
       with:
        distribution: oracle # not required, default in oracle. See also 'Supported distributions' for available options in https://github.com/actions/setup-java
        java-version: 21 # not required, default in 21,  See available options in https://github.com/actions/setup-java
@@ -35,5 +35,5 @@ jobs:
     runs-on: ubuntu-24.04
     name: TEST
     steps:
-      - uses: taophilosophy/git-gc-bfg-action@v1.0.33
+      - uses: taophilosophy/git-gc-bfg-action@v1.0.34
 ```
