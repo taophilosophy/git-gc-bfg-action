@@ -56,7 +56,7 @@ runs:
           printf '%s\n' "Git Email is ${EMAIL}"
           git config --global user.name "${NAME}"
           git config --global user.email "${EMAIL}"
-          git config --global url."https://${{ GH_USER }}:${{ secrets.GH_TOKEN }}@github.com".insteadOf "https://github.com"
+          git config --global url."https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com".insteadOf "https://github.com"
           echo "--------GC----------------"
           cd ${GITHUB_REPOSITORY##*/}.git
           pwd
@@ -72,5 +72,4 @@ runs:
         FILE_SIZE: ${{ inputs.file-size }}
         EMAIL: ${{ inputs.email }}
         NAME: ${{ inputs.name }}
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_USER: ${{ github.repository_owner }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
