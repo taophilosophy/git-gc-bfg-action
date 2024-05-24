@@ -72,3 +72,16 @@ runs:
         FILE_SIZE: ${{ inputs.file-size }}
         EMAIL: ${{ inputs.email }}
         NAME: ${{ inputs.name }}
+      continue-on-error: true
+      
+    - name: print size after gc
+      shell: bash
+      run: |
+          cd ${GITHUB_REPOSITORY##*/}.git
+          pwd
+          ls && pwd
+          git push -f
+          cd .. && du -sh ${GITHUB_REPOSITORY##*/}.git  
+      env:
+        GH_ACTION_REPOSITORY: ${{ github.repository }}       
+
