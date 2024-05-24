@@ -21,7 +21,7 @@ jobs:
        file-size: 2M # file-size to clean in BFG Repo-Cleaner. not required, default in 2M see available options in https://rtyley.github.io/bfg-repo-cleaner/ 
 ```
 
-So, The The minimum usable configuration is as follows. He will automatically clean up any target file smaller than 2M and auto Git gc.
+So, The The minimum usable configuration is as follows. The bfg-repo-cleaner will automatically clean up any target file smaller than 2M and auto Git gc.
 
 ```
 name: 🔗 git-gc-bfg-action
