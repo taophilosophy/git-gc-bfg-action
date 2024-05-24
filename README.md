@@ -1,5 +1,7 @@
 # git-gc-bfg-action
 
+**It seems not work at all.**
+
 ```
 name: 🔗 git-gc-bfg-action
 
