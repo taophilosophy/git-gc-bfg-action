@@ -49,9 +49,6 @@ runs:
           git config --global user.name "${NAME}"
           git config --global user.email "${EMAIL}"
           git clone --bare $(echo "$GH_ACTION_GH_ACTION_REPOSITORY_URL" | sed "s#git://#https://#")
-          cd ${GITHUB_REPOSITORY##*/}.git
-          cd ..
-          pwd
           git config --global url."https://${GITHUB_ACTOR}:${{ github.token }}@github.com".insteadOf "https://github.com"
           curl -LJO https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/bfg-1.14.0.jar && [ -f "bfg-1.14.0.jar" ] && echo "Download successful: bfg-1.14.0.jar" || (echo "Download failed"; exit 1)
           ls -lk *.jar
