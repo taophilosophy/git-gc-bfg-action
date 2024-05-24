@@ -21,9 +21,13 @@ runs:
       with:
         distribution: ${{ inputs.distribution }} # See 'Supported distributions' for available options
         java-version: ${{ inputs.java-version }}
+        
+    - name: show java version
+      shell: bash
       run: java -version
                 
     - name: checkout mirror
+      shell: bash
       run: |
           echo "NOW_REPOSITORY=$GH_ACTION_REPOSITORY" >> "$GITHUB_ENV"
           echo "NOW_REPOSITORY_URL=$GH_ACTION_GH_ACTION_REPOSITORY_URL" >> "$GITHUB_ENV" 
