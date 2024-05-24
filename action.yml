@@ -34,10 +34,10 @@ runs:
           echo "REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV 
           echo "FILE_SIZE=${FILE_SIZE}" >> $GITHUB_ENV 
           echo "-----------------------------------------"
-          printf '%s\n' NOW_REPOSITORY is "$NOW_REPOSITORY" 
-          printf '%s\n' NOW_REPOSITORY_URL is "$NOW_REPOSITORY_URL"
-          printf '%s\n' NOW_REPOSITORY_NAME is "$REPO_NAME" \n
-          printf '%s\n' FILE_SIZE is "${FILE_SIZE}" \n
+          printf '%s\n' "NOW_REPOSITORY is $NOW_REPOSITORY" 
+          printf '%s\n' "NOW_REPOSITORY_URL is $NOW_REPOSITORY_URL"
+          printf '%s\n' "NOW_REPOSITORY_NAME is $REPO_NAME" 
+          printf '%s\n' "FILE_SIZE is ${FILE_SIZE}" 
           pwd
           echo "-----------------------------------------"
           git clone --mirror $NOW_REPOSITORY_URL
