@@ -52,7 +52,6 @@ runs:
           git config --global remote.origin.fetch "+refs/tags/*:refs/tags/*"
           git clone --mirror $(echo "$GH_ACTION_GH_ACTION_REPOSITORY_URL" | sed "s#git://#https://#")
           cd ${GITHUB_REPOSITORY##*/}.git
-          git remote update
           git config -e
           cd ..
           pwd
