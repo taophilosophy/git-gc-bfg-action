@@ -46,6 +46,15 @@ runs:
           ls -l
           echo "------------------start--------bfg---------------"
           git clone --mirror $(echo "$GH_ACTION_GH_ACTION_REPOSITORY_URL" | sed "s#git://#https://#")
+          cd ${GITHUB_REPOSITORY##*/}.git
+          git config --global user.name "${NAME}"
+          git config --global user.email "${EMAIL}"
+          git config --global remote.origin.fetch "+refs/heads/*:refs/heads/*"
+          git config --global remote.origin.fetch "+refs/tags/*:refs/tags/*"
+          git remote update
+          cd ..
+          pwd
+          git config --global url."https://${GITHUB_ACTOR}:${{ github.token }}@github.com".insteadOf "https://github.com"
           curl -LJO https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/bfg-1.14.0.jar && [ -f "bfg-1.14.0.jar" ] && echo "Download successful: bfg-1.14.0.jar" || (echo "Download failed"; exit 1)
           ls -lk *.jar
           pwd
@@ -54,17 +63,11 @@ runs:
           du -sh ${GITHUB_REPOSITORY##*/}.git
           printf '%s\n' "Git username is ${NAME}"
           printf '%s\n' "Git Email is ${EMAIL}"
-          cd ${GITHUB_REPOSITORY##*/}.git
-
-          git config --global user.name "${NAME}"
-          git config --global user.email "${EMAIL}"
-          git config --global remote.origin.fetch "+refs/heads/*:refs/heads/*"
-          git config --global remote.origin.fetch "+refs/tags/*:refs/tags/*"
-          git remote update
-          git config --global url."https://${GITHUB_ACTOR}:${{ github.token }}@github.com".insteadOf "https://github.com"
           echo "--------GC---start-------------"
           pwd
           ls
+          cd ${GITHUB_REPOSITORY##*/}.git
+          pwd
           git reflog expire --expire=now --all && git gc --prune=now --aggressive
           echo "------GC---OK-------------------------"
           ls && pwd
