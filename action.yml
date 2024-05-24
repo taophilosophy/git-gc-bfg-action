@@ -9,7 +9,7 @@ inputs:
   file-size:
     description: 'file-size to clean'
     required: false
-    default: '2'
+    default: '2M'
   java-version:
     description: 'JDK version'
     required: false
