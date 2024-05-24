@@ -1,0 +1,52 @@
+name: "action for git gc and BFG Repo-Cleaner"
+description: "action for git gc and BFG Repo-Cleaner"
+author: "ykla"
+inputs:
+  distribution:
+    description: 'JDK Distribution'
+    required: false
+    default: 'oracle'
+  file-size:
+    description: 'file-size to clean'
+    required: false
+    default: '2'
+  java-version:
+    description: 'JDK version'
+    required: false
+    default: '21'
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-java@v4
+      with:
+        distribution: ${{ inputs.distribution }} # See 'Supported distributions' for available options
+        java-version: ${{ inputs.java-version }}
+      run: java -version
+                
+    - name: checkout mirror
+      run: |
+          echo "NOW_REPOSITORY=$GH_ACTION_REPOSITORY" >> "$GITHUB_ENV"
+          echo "NOW_REPOSITORY_URL=$GH_ACTION_GH_ACTION_REPOSITORY_URL" >> "$GITHUB_ENV" 
+          echo "REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV 
+          echo "FILE_SIZE=${FILE_SIZE}" >> $GITHUB_ENV 
+          echo "-----------------------------------------"
+          printf NOW_REPOSITORY is "$NOW_REPOSITORY"
+          printf NOW_REPOSITORY_URL is "$NOW_REPOSITORY_URL"
+          printf NOW_REPOSITORY_NAME is "$REPO_NAME"
+          printf FILE_SIZE is "${FILE_SIZE}"
+          pwd
+          echo "-----------------------------------------"
+          git clone --mirror $NOW_REPOSITORY_URL
+          command -v wget >/dev/null 2>&1 || { sudo apt update -y && sudo apt install wget -y; }; wget https://github.com/rtyley/bfg-repo-cleaner/releases/download/v1.14.0/bfg-1.14.0.jar -O bfg-1.14.0.jar && [ -f "bfg-1.14.0.jar" ] && echo "Download successful: bfg-1.14.0.jar" || (echo "Download failed"; exit 1)
+          ls -lk *.jar
+          pwd
+          java -jar bfg-1.14.0.jar --strip-blobs-bigger-than $FILE_SIZE $REPO_NAME.git
+          pwd
+          cd $REPO_NAME.git
+          pwd
+          git reflog expire --expire=now --all && git gc --prune=now --aggressive
+      env:
+        GH_ACTION_REPOSITORY: ${{ github.repository }}       
+        GH_ACTION_GH_ACTION_REPOSITORY_URL: ${{ github.repositoryUrl }}      
+        FILE_SIZE: ${{ inputs.file-size }}
+        
