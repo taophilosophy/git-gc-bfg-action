@@ -54,18 +54,16 @@ runs:
           du -sh ${GITHUB_REPOSITORY##*/}.git
           printf '%s\n' "Git username is ${NAME}"
           printf '%s\n' "Git Email is ${EMAIL}"
+          cd ${GITHUB_REPOSITORY##*/}.git
           git config --global user.name "${NAME}"
           git config --global user.email "${EMAIL}"
           git config --global url."https://${GITHUB_ACTOR}:${{ github.token }}@github.com".insteadOf "https://github.com"
           echo "--------GC---start-------------"
-          cd ${GITHUB_REPOSITORY##*/}.git
           pwd
           ls
           git reflog expire --expire=now --all && git gc --prune=now --aggressive
           echo "------GC---OK-------------------------"
           ls && pwd
-          git add .
-          git commit -m "Git GC"
           git push -f --mirror
           cd .. && du -sh ${GITHUB_REPOSITORY##*/}.git   
       env:
