@@ -44,7 +44,7 @@ runs:
           printf '%s\n' "FILE_SIZE is ${FILE_SIZE}" 
           pwd
           ls -l
-          echo "-----------------------------------------"
+          echo "------------------start--------bfg---------------"
           git clone --mirror $(echo "$GH_ACTION_GH_ACTION_REPOSITORY_URL" | sed "s#git://#https://#")
           curl -LJO https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/bfg-1.14.0.jar && [ -f "bfg-1.14.0.jar" ] && echo "Download successful: bfg-1.14.0.jar" || (echo "Download failed"; exit 1)
           ls -lk *.jar
@@ -57,7 +57,7 @@ runs:
           git config --global user.name "${NAME}"
           git config --global user.email "${EMAIL}"
           git config --global url."https://${GITHUB_ACTOR}:${{ github.token }}@github.com".insteadOf "https://github.com"
-          echo "--------GC----------------"
+          echo "--------GC---start-------------"
           cd ${GITHUB_REPOSITORY##*/}.git
           pwd
           ls
@@ -80,7 +80,6 @@ runs:
           cd ${GITHUB_REPOSITORY##*/}.git
           pwd
           ls && pwd
-          git push -f
           cd .. && du -sh ${GITHUB_REPOSITORY##*/}.git  
       env:
         GH_ACTION_REPOSITORY: ${{ github.repository }}       
