@@ -44,13 +44,15 @@ runs:
           java -jar bfg-1.14.0.jar --strip-blobs-bigger-than $FILE_SIZE ${GITHUB_REPOSITORY##*/}.git
           pwd
           du -sh ${GITHUB_REPOSITORY##*/}.git
+          echo "--------GC----------------"
           cd ${GITHUB_REPOSITORY##*/}.git
           pwd
-          echo "--------GC----------------"
+          ls
           git reflog expire --expire=now --all && git gc --prune=now --aggressive
           echo "------GC---OK-------------------------"
           git rebase --exec "git commit --amend --no-edit -n -S" -i --root
           git rebase --committer-date-is-author-date -i --root
+          ls && pwd
           git push -f
           cd .. && du -sh ${GITHUB_REPOSITORY##*/}.git
           
