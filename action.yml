@@ -64,6 +64,8 @@ runs:
           git reflog expire --expire=now --all && git gc --prune=now --aggressive
           echo "------GC---OK-------------------------"
           ls && pwd
+          git add .
+          git commit -m "Git GC"
           git push --force --all
           cd .. && du -sh ${GITHUB_REPOSITORY##*/}.git   
       env:
