@@ -1,6 +1,9 @@
 name: "action for git gc and BFG Repo-Cleaner"
 description: "action for git gc and BFG Repo-Cleaner"
 author: "ykla"
+branding:
+  icon: 'type'
+  color: 'blue'
 inputs:
   distribution:
     description: 'JDK Distribution'
