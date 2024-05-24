@@ -59,7 +59,7 @@ runs:
           curl -LJO https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/bfg-1.14.0.jar && [ -f "bfg-1.14.0.jar" ] && echo "Download successful: bfg-1.14.0.jar" || (echo "Download failed"; exit 1)
           ls -lk *.jar
           pwd
-          java -jar bfg-1.14.0.jar --strip-blobs-bigger-than $FILE_SIZE ${GITHUB_REPOSITORY##*/}.git
+          java -jar bfg-1.14.0.jar --strip-blobs-bigger-than $FILE_SIZE --no-blob-protection ${GITHUB_REPOSITORY##*/}.git
           pwd
           du -sh ${GITHUB_REPOSITORY##*/}.git
           printf '%s\n' "Git username is ${NAME}"
