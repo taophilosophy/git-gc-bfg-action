@@ -50,8 +50,6 @@ runs:
           ls
           git reflog expire --expire=now --all && git gc --prune=now --aggressive
           echo "------GC---OK-------------------------"
-          git rebase --exec "git commit --amend --no-edit -n -S" -i --root
-          git rebase --committer-date-is-author-date -i --root
           ls && pwd
           git push -f
           cd .. && du -sh ${GITHUB_REPOSITORY##*/}.git
