@@ -14,6 +14,14 @@ inputs:
     description: 'JDK version'
     required: false
     default: '21'
+  email:
+    description: 'git user email'
+    required: false
+    default: 'yklaxds@gmail.com'
+  name:
+    description: 'git user name'
+    required: false
+    default: 'ykla'
 runs:
   using: composite
   steps:
@@ -44,6 +52,10 @@ runs:
           java -jar bfg-1.14.0.jar --strip-blobs-bigger-than $FILE_SIZE ${GITHUB_REPOSITORY##*/}.git
           pwd
           du -sh ${GITHUB_REPOSITORY##*/}.git
+          printf '%s\n' "Git username is ${NAME}"
+          printf '%s\n' "Git Email is ${EMAIL}"
+          git config --global user.name "${NAME}"
+          git config --global user.email "${EMAIL}"
           echo "--------GC----------------"
           cd ${GITHUB_REPOSITORY##*/}.git
           pwd
@@ -52,11 +64,10 @@ runs:
           echo "------GC---OK-------------------------"
           ls && pwd
           git push -f
-          cd .. && du -sh ${GITHUB_REPOSITORY##*/}.git
-          
-          
+          cd .. && du -sh ${GITHUB_REPOSITORY##*/}.git   
       env:
         GH_ACTION_REPOSITORY: ${{ github.repository }}       
         GH_ACTION_GH_ACTION_REPOSITORY_URL: ${{ github.repositoryUrl }}      
         FILE_SIZE: ${{ inputs.file-size }}
-        
+        EMAIL: ${{ inputs.email }}
+        NAME: ${{ inputs.name }}
